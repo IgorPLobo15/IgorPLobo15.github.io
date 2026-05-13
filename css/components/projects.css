@@ -3,6 +3,12 @@
   scroll-margin-top: 15rem;
 }
 
+.experience__detail {
+  max-width: 66rem;
+  margin: 0 auto 6rem;
+  text-align: left;
+}
+
 .projects .projects__content {
   max-width: 56rem;
   text-align: center;

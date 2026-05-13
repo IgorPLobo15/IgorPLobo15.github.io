@@ -1,250 +1,578 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-  <head>
-    <!-- Meta tags -->
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- title -->
-    <title>IgorPLobo Portfólio</title>
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/extends.css" />
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <!-- navbar -->
-    <nav class="navbar">
-      <div class="navbar__content max-width mb-0">
-        <p><strong>IgorPLobo</strong></p>
+<html lang="pt-BR" class="scroll-smooth">
 
-        <ul class="navbar__links">
-          <li><a href="#header">Início</a></li>
-          <li><a href="#about">Sobre</a></li>
-          <li><a href="#skills">Habilidades</a></li>
-          <li><a href="#projects">Projetos</a></li>
-          <li><a href="#footer">Contato</a></li>
-        </ul>
-        <div class="navbar__mobile">
-          <img src="assets/menu.svg" alt="menu" class="burguer" />
-          <ul class="mobile__links">
-            <li><a href="#header">Início</a></li>
-            <li><a href="#about">Sobre</a></li>
-            <li><a href="#skills">Habilidades</a></li>
-            <li><a href="#projects">Projetos</a></li>
-            <li><a href="#footer">Contato</a></li>
-          </ul>
-        </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Igor Pereira Lobo — Full Stack Developer</title>
+  <meta name="description"
+    content="Desenvolvedor Full Stack especializado em Angular, Laravel e PostgreSQL. Sistemas estaduais em produção para o Governo de Goiás." />
+  <meta name="author" content="Igor Pereira Lobo" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
+
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            surface: {
+              0: '#000000',
+              1: '#0A0A0A',
+              2: '#121212',
+              3: '#1A1A1A',
+              4: '#222222',
+            },
+            accent: '#6366F1',
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.8s ease-out forwards',
+            'slide-up': 'slideUp 0.6s ease-out forwards',
+            'pulse-dot': 'pulseDot 2s ease-in-out infinite',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            slideUp: {
+              '0%': { opacity: '0', transform: 'translateY(24px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            pulseDot: {
+              '0%, 100%': { opacity: '1' },
+              '50%': { opacity: '0.4' },
+            },
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    * {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Scroll-triggered fade */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Subtle link underline */
+    .link-underline {
+      position: relative;
+      display: inline-block;
+    }
+
+    .link-underline::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: #6366F1;
+      transition: width 0.3s ease;
+    }
+
+    .link-underline:hover::after {
+      width: 100%;
+    }
+
+    /* Nav blur */
+    .nav-blur {
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #000;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #222;
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #333;
+    }
+
+    /* Profile photo */
+    .profile-photo {
+      filter: grayscale(30%) brightness(0.9);
+      transition: filter 0.5s ease, transform 0.5s ease;
+    }
+
+    .profile-photo:hover {
+      filter: grayscale(0%) brightness(1);
+      transform: scale(1.03);
+    }
+
+    /* Mobile menu */
+    .mobile-menu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+
+    .mobile-menu.open {
+      max-height: 320px;
+    }
+  </style>
+</head>
+
+<body class="bg-surface-0 text-gray-300 font-sans selection:bg-accent/20 selection:text-white">
+
+  <!-- ═══════════════════ NAVIGATION ═══════════════════ -->
+  <nav id="navbar"
+    class="fixed top-0 left-0 right-0 z-50 nav-blur bg-surface-0/80 border-b border-white/5 transition-all duration-300">
+    <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="#" class="font-mono text-sm text-white tracking-tight">igor.lobo</a>
+
+      <!-- Desktop links -->
+      <ul class="hidden md:flex items-center gap-8 text-sm text-gray-500">
+        <li><a href="#sobre" class="hover:text-gray-200 transition-colors duration-200">Sobre</a></li>
+        <li><a href="#experiencia" class="hover:text-gray-200 transition-colors duration-200">Experiência</a></li>
+        <li><a href="#projetos" class="hover:text-gray-200 transition-colors duration-200">Projetos</a></li>
+        <li><a href="#stack" class="hover:text-gray-200 transition-colors duration-200">Stack</a></li>
+        <li><a href="#contato" class="hover:text-gray-200 transition-colors duration-200">Contato</a></li>
+      </ul>
+
+      <!-- Mobile hamburger -->
+      <button id="menu-btn" class="md:hidden flex flex-col gap-1.5 p-2 group" aria-label="Menu">
+        <span class="block w-5 h-px bg-gray-400 group-hover:bg-white transition-colors"></span>
+        <span class="block w-5 h-px bg-gray-400 group-hover:bg-white transition-colors"></span>
+        <span class="block w-3.5 h-px bg-gray-400 group-hover:bg-white transition-colors"></span>
+      </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="mobile-menu md:hidden border-t border-white/5">
+      <div class="max-w-5xl mx-auto px-6 py-6 flex flex-col gap-4 text-sm text-gray-400">
+        <a href="#sobre" class="hover:text-white transition-colors mobile-link">Sobre</a>
+        <a href="#experiencia" class="hover:text-white transition-colors mobile-link">Experiência</a>
+        <a href="#projetos" class="hover:text-white transition-colors mobile-link">Projetos</a>
+        <a href="#stack" class="hover:text-white transition-colors mobile-link">Stack</a>
+        <a href="#contato" class="hover:text-white transition-colors mobile-link">Contato</a>
       </div>
-    </nav>
+    </div>
+  </nav>
 
-    <!-- header -->
-    <header id="header" class="max-width">
-      <div class="header__left">
-        <h1>Olá! Sou Igor Pereira Lobo, Desenvolvedor Full Stack</h1>
-    <p>
-      Desenvolvedor Full Stack, com experiência em front-end e back-end, dedicado a construir soluções tecnológicas robustas e eficientes. Trabalho com frameworks como <strong>Angular</strong>, <strong>Laravel</strong> e <strong>PHP</strong>, além de utilizar linguagens como <strong>JavaScript</strong>, <strong>TypeScript</strong> e <strong>PHP</strong>. Foco em criar aplicativos sólidos, escaláveis e que atendam às necessidades dos usuários. Sempre busco aprimorar minhas habilidades para colaborar no desenvolvimento de soluções inovadoras que resolvam problemas do mundo real.
-    </p>
+  <!-- ═══════════════════ HERO ═══════════════════ -->
+  <section class="min-h-screen flex items-center pt-16">
+    <div class="max-w-5xl mx-auto px-6 py-24 md:py-32 w-full">
+      <div class="grid md:grid-cols-5 gap-12 md:gap-16 items-center animate-fade-in">
 
+        <!-- Text content -->
+        <div class="md:col-span-3 space-y-8">
 
-
-        <a href="#about" class="btn btn-primary">Saiba Mais!</a>
-      </div>
-      <div class="header__right">
-        <div class="header__image">
-          <img src="assets/IMG_20220804_164640_resized.jpg" alt="IgorPLobo" class="Igor" />
-          <img src="assets/abstract.svg" alt="background" class="background" />
-        </div>
-      </div>
-    </header>
-
-    <!-- Sobre -->
-    <section id="about" class="about max-width">
-      <div class="about__left">
-        <h2 class="secondary-title">Além do código: quem sou eu?</h2>
-        <p>
-          Que tal se conectar comigo nas redes sociais abaixo e saber mais sobre
-          meu trabalho?
-        </p>
-        <ul>
-          <li>
-            <a href="https://www.instagram.com/igorp_lobo/"target="_blank"><img src="assets/instagrampequeno.png" alt="Instagram" /></a>
-          </li>
-          <li>
-            <a href="https://www.linkedin.com/in/igor-lobo-7273a123a/"target="_blank"><img src="assets/linkedinpequeno.png" alt="Linkedin" /></a>
-          </li>
-          <li>
-            <a href="https://github.com/IgorPLobo15"target="_blank"><img src="assets/githubpequeno.png" alt="Facebook" /></a>
-          </li>
-        </ul>
-      </div>
-      <div class="about__right">
-        <h3 class="tertiary-title mb-m">
-          Desenvolvedor Full Stack apaixonado por tecnologia e soluções criativas
-        </h3>
-        <p>
-          Olá, eu sou Igor, um desenvolvedor Full Stack com experiência tanto no front-end quanto no back-end. Atualmente, estou focado na criação de aplicações web completas, utilizando frameworks como <strong>Angular</strong>, <strong>Laravel</strong> e <strong>PHP</strong>, além de linguagens como <strong>JavaScript</strong>, <strong>TypeScript</strong> e <strong>PHP</strong>. Participo ativamente no desenvolvimento de um sistema de compliance de gestão de risco que será utilizado por todo o Estado de Goiás.
-        </p>
-        <p>
-          Apaixonado por encontrar soluções inovadoras e criativas para problemas complexos, estou sempre em busca de novos conhecimentos e desafios. Meu objetivo é colaborar em projetos que demandem aplicações sólidas, escaláveis e que realmente façam a diferença.
-        </p>
-        
-        
-      </div>
-    </section>
-
-     <!-- habilidades -->
-<section id="skills" class="skills">
-  <div class="skills__content max-width">
-    <h2 class="tertiary-title">Minha caixinha de ferramentas</h2>
-    <p class="description">
-      Descubra as habilidades e ferramentas que domino.
-    </p>
-    <ul>
-      <li class="skills__item">
-        <div class="image-container">
-          <img src="assets/notebook.png" alt="Desenvolvimento Web" />
-        </div>
-        <h3>Desenvolvimento Full Stack</h3>
-        <p>
-          Atuo no desenvolvimento de aplicações web completas, utilizando <strong>Angular</strong>, <strong>Laravel</strong> e <strong>PHP</strong>. Estou sempre buscando aprimorar minhas habilidades em tecnologias modernas para criar soluções robustas e escaláveis.
-        </p>
-      </li>
-      <li class="skills__item">
-        <div class="image-container">
-          <img src="assets/icons8-banco-de-dados-50.png" alt="Banco de Dados" />
-        </div>
-        <h3>Banco de Dados</h3>
-        <p>
-          Habilidades sólidas em bancos de dados, com domínio em <strong>SQL</strong>, modelagem de dados e experiência em sistemas de gerenciamento de bancos de dados (SGBD).
-        </p>
-      </li>
-      <li class="skills__item">
-        <div class="image-container">
-          <img src="assets/phone.png" alt="Scrum" />
-        </div>
-        <h3>Scrum e Gestão de Projetos</h3>
-        <p>
-          Experiência em metodologias ágeis, especialmente <strong>Scrum</strong>, utilizando o <strong>Jira</strong> para gerenciamento de tarefas e controle de projetos.
-        </p>
-      </li>
-      <li class="skills__item">
-        <div class="image-container">
-          <img src="assets/files.png" alt="Gerenciamento de Versões" />
-        </div>
-        <h3>Gerenciamento de Versões</h3>
-        <p>
-          Experiência em ferramentas de gerenciamento de versão, como <strong>Git</strong>, para controle de projetos e colaboração em equipe.
-        </p>
-      </li>
-    </ul>
-  </div>
-</section>
-
-
-    <!-- Projetos -->
-    <section id="projects" class="projects max-width">
-      <div class="projects__content">
-        <h2 class="secondary-title">Projetos em Destaque</h2>
-        <p>
-          De ideias abstratas a projetos bem-sucedidos, aqui estão alguns dos
-          meus trabalhos mais recentes
-        </p>
-      </div>
-      <ul>
-        <li>
-          <div class="image">
-            <img src="assets/task-manager.png" alt="Gerenciamento de tarefas" />
+          <!-- Status badge -->
+          <div class="flex items-center gap-2.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse-dot"></span>
+            <span class="text-xs font-mono text-gray-500 uppercase tracking-widest">Disponível para novos
+              desafios</span>
           </div>
-          <div class="projects__info">
-            <div class="projects__info">
-              <h3 class="tertiary-title">
-                Sistema de Gestão de Risco
-              </h3>
-              <p>
-                Este projeto é um sistema de compliance de gestão de risco que será utilizado por todo o Estado de Goiás. O sistema foi desenvolvido com <strong>Angular</strong> no front-end e <strong>Laravel</strong> no back-end, utilizando <strong>PostgreSQL</strong> como banco de dados. O projeto adota a metodologia <strong>Scrum</strong>, com o uso do <strong>Jira</strong> para gerenciamento de tarefas e controle de projetos. Ele visa proporcionar uma abordagem estruturada para a identificação, análise e mitigação de riscos, garantindo uma gestão eficiente e transparente.
+
+          <!-- Headline -->
+          <h1
+            class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-gray-100 leading-[1.1] tracking-tight">
+            Full Stack<br />Developer
+          </h1>
+
+          <!-- Sub-headline -->
+          <p class="text-lg md:text-xl text-gray-500 max-w-xl leading-relaxed font-light">
+            Construindo sistemas estaduais de grande porte para o Governo de Goiás.
+            Angular, Laravel & PostgreSQL.
+          </p>
+
+          <!-- CTA -->
+          <div class="flex flex-wrap items-center gap-6 pt-4">
+            <a href="#projetos"
+              class="group inline-flex items-center gap-2 text-sm text-gray-300 border border-white/10 px-6 py-3 rounded-full hover:border-white/25 hover:text-white transition-all duration-300">
+              Ver projetos
+              <svg class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-200" fill="none"
+                stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M7 17L17 7M17 7H7M17 7v10" />
+              </svg>
+            </a>
+            <a href="#contato" class="text-sm text-gray-600 hover:text-gray-300 transition-colors duration-200">
+              Fale comigo →
+            </a>
+          </div>
+        </div>
+
+        <!-- Profile photo -->
+        <div class="md:col-span-2 flex justify-center md:justify-end">
+          <div class="relative">
+            <div class="w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full overflow-hidden ring-1 ring-white/10">
+              <img src="assets/minhafotoeu.png" alt="Igor Pereira Lobo"
+                class="w-full h-full object-cover profile-photo" />
+            </div>
+            <!-- Subtle glow -->
+            <div class="absolute -inset-4 bg-accent/5 rounded-full blur-2xl -z-10"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ SOBRE ═══════════════════ -->
+  <section id="sobre" class="py-24 md:py-32 border-t border-white/5">
+    <div class="max-w-5xl mx-auto px-6 reveal">
+
+      <p class="text-xs font-mono text-gray-600 uppercase tracking-widest mb-12">01 — Sobre</p>
+
+      <div class="grid md:grid-cols-5 gap-12 md:gap-16">
+        <div class="md:col-span-3 space-y-6">
+          <h2 class="text-2xl md:text-3xl font-semibold text-gray-100 leading-snug">
+            Desenvolvedor Full Stack com experiência em sistemas web de alto impacto.
+          </h2>
+          <p class="text-gray-400 leading-relaxed">
+            Atuo na <span class="text-gray-200">G4F</span>, em Goiânia — GO, no desenvolvimento e sustentação de
+            aplicações estratégicas para a <span class="text-gray-200">Controladoria-Geral do Estado de Goiás
+              (CGE-GO)</span>. Trabalho em sistemas críticos em produção utilizados por múltiplos órgãos da
+            administração pública estadual.
+          </p>
+          <p class="text-gray-400 leading-relaxed">
+            Graduando em <span class="text-gray-200">Ciência da Computação</span> pela Universidade Paulista (ago 2022 –
+            jun 2026), com foco em desenvolvimento de software e fundamentos aplicados a sistemas reais. Experiência com
+            metodologias ágeis, versionamento e colaboração em equipes distribuídas.
+          </p>
+        </div>
+
+        <div class="md:col-span-2 space-y-6">
+          <div>
+            <p class="text-xs font-mono text-gray-600 uppercase tracking-wider mb-2">Localização</p>
+            <p class="text-gray-300 text-sm">Goiânia, Goiás — Brasil</p>
+          </div>
+          <div>
+            <p class="text-xs font-mono text-gray-600 uppercase tracking-wider mb-2">Formação</p>
+            <p class="text-gray-300 text-sm">Ciência da Computação — UNIP</p>
+            <p class="text-gray-500 text-xs mt-1">Ago 2022 – Jun 2026</p>
+          </div>
+          <div>
+            <p class="text-xs font-mono text-gray-600 uppercase tracking-wider mb-2">Idiomas</p>
+            <p class="text-gray-300 text-sm">Português — Nativo</p>
+            <p class="text-gray-300 text-sm">Inglês — Profissional</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ EXPERIÊNCIA ═══════════════════ -->
+  <section id="experiencia" class="py-24 md:py-32 border-t border-white/5">
+    <div class="max-w-5xl mx-auto px-6 reveal">
+
+      <p class="text-xs font-mono text-gray-600 uppercase tracking-widest mb-12">02 — Experiência</p>
+
+      <div class="space-y-0">
+
+        <!-- G4F -->
+        <div class="group py-10 border-b border-white/5 first:pt-0">
+          <div class="grid md:grid-cols-5 gap-4 md:gap-8">
+            <div class="md:col-span-2">
+              <p class="text-xs font-mono text-gray-600 uppercase tracking-wider">Fev 2025 — Presente</p>
+              <p class="text-sm text-gray-500 mt-1">G4F · Goiânia, GO</p>
+            </div>
+            <div class="md:col-span-3 space-y-4">
+              <h3 class="text-lg font-medium text-gray-100 group-hover:text-white transition-colors duration-200">
+                Desenvolvedor Full Stack</h3>
+              <p class="text-sm text-gray-400 leading-relaxed">
+                Desenvolvimento e sustentação de sistemas web estaduais utilizados por múltiplos órgãos do Governo de
+                Goiás. Atuação direta no IRIS (Gestão de Riscos e Compliance) e SISPAC (Correição do Estado).
+                Participação em decisões técnicas e definição de soluções para sistemas críticos em produção.
+              </p>
+              <p class="text-sm text-gray-400 leading-relaxed">
+                Liderança técnica no PCM (Programa de Compliance Público): levantamento de requisitos, arquitetura e
+                modelagem de banco de dados.
+              </p>
+              <p class="text-xs font-mono text-gray-600 mt-3">Angular · TypeScript · Laravel · PHP · PostgreSQL ·
+                Tailwind CSS · Scrum · Jira</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CGE-GO -->
+        <div class="group py-10 border-b border-white/5">
+          <div class="grid md:grid-cols-5 gap-4 md:gap-8">
+            <div class="md:col-span-2">
+              <p class="text-xs font-mono text-gray-600 uppercase tracking-wider">Mar 2024 — Fev 2025</p>
+              <p class="text-sm text-gray-500 mt-1">CGE-GO · Goiânia, GO</p>
+            </div>
+            <div class="md:col-span-3 space-y-4">
+              <h3 class="text-lg font-medium text-gray-100 group-hover:text-white transition-colors duration-200">
+                Estágio em Desenvolvimento Full Stack</h3>
+              <p class="text-sm text-gray-400 leading-relaxed">
+                Criação e manutenção de aplicações web completas, do front-end ao back-end. Desenvolvimento de sites
+                institucionais e aplicações internas para a Controladoria-Geral do Estado de Goiás.
+              </p>
+              <p class="text-xs font-mono text-gray-600 mt-3">HTML · CSS · Bootstrap · JavaScript · PHP · Laravel ·
+                Angular · WordPress · Joomla</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ PROJETOS ═══════════════════ -->
+  <section id="projetos" class="py-24 md:py-32 border-t border-white/5">
+    <div class="max-w-5xl mx-auto px-6 reveal">
+
+      <p class="text-xs font-mono text-gray-600 uppercase tracking-widest mb-12">03 — Projetos</p>
+
+      <div class="space-y-0">
+
+        <!-- IRIS -->
+        <article class="group py-10 border-b border-white/5 first:pt-0">
+          <div class="grid md:grid-cols-5 gap-6 md:gap-8">
+            <div class="md:col-span-2">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-accent"></span>
+                <p class="text-xs font-mono text-gray-600 uppercase tracking-wider">Em produção</p>
+              </div>
+              <p class="text-xs font-mono text-gray-600 mt-2">Angular · Laravel · PostgreSQL</p>
+            </div>
+            <div class="md:col-span-3 space-y-4">
+              <h3 class="text-xl font-medium text-gray-100 group-hover:text-white transition-colors duration-200">IRIS —
+                Gestão de Riscos e Compliance</h3>
+              <p class="text-sm text-gray-400 leading-relaxed">
+                Sistema estratégico de compliance e gestão de risco utilizado por múltiplos órgãos da administração
+                pública estadual de Goiás. Conquistou o <span class="text-gray-200">1º lugar no Prêmio Co-Labora
+                  2025</span>, promovido pela CGE-GO. Abordagem estruturada para identificação, análise e mitigação de
+                riscos.
+              </p>
+
+            </div>
+          </div>
+        </article>
+
+        <!-- PCM -->
+        <article class="group py-10 border-b border-white/5">
+          <div class="grid md:grid-cols-5 gap-6 md:gap-8">
+            <div class="md:col-span-2">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-yellow-500"></span>
+                <p class="text-xs font-mono text-gray-600 uppercase tracking-wider">Em desenvolvimento</p>
+              </div>
+              <p class="text-xs font-mono text-gray-600 mt-2">Laravel · MVC · PostgreSQL</p>
+            </div>
+            <div class="md:col-span-3 space-y-4">
+              <h3 class="text-xl font-medium text-gray-100 group-hover:text-white transition-colors duration-200">PCM —
+                Programa de Compliance Público</h3>
+              <p class="text-sm text-gray-400 leading-relaxed">
+                Sistema desenvolvido sob liderança técnica, incluindo levantamento de requisitos, definição de
+                arquitetura e modelagem de banco de dados. Implementado em Laravel seguindo o padrão MVC.
               </p>
             </div>
-            
           </div>
-          
-            <a href="https://homolog.integra.controladoria.go.gov.br/sign-in" target="_blank">Leia mais &rarr;</a>
-          </div>
-        </li>
-        <li class="projects__reversed-list">
-          <div class="image">
-            <img src="assets/ecommerce.png" alt="ecommerce" />
-          </div>
-          <div class="projects__info">
-            <div class="projects__info">
-              <div class="projects__info">
-                <div class="projects__info">
-                  <h3 class="tertiary-title">
-                    Relatório de Gestão de Ouvidoria
-                  </h3>
-                  <p>
-                    Este projeto é um sistema que fornece aos cidadãos do Estado de Goiás acesso a informações sobre reclamações, elogios, sugestões, denúncias e pedidos de informação, seja pela via presencial, telefônica ou através da internet. O relatório apresenta dados de forma visual, utilizando gráficos, e foi desenvolvido em <strong>Angular</strong>, consumindo uma <strong>API</strong> para integrar as informações.
-                  </p>
-                </div>
-                
-              </div>
-              
-            </div>
-            
-            <a href="https://github.com/IgorPLobo15/RelatorioOuvidoria17"target="_blank">Leia mais &rarr;</a>
-          </div>
-        </li>
-        <li>
-          <div class="image">
-            <img src="assets/delivery.png" alt="delivery" />
-          </div>
-          <div class="projects__info">
-            <h3 class="tertiary-title">
-              To-Do-Lista com Java e SpringBoot
-            </h3>
-            <p>
-              Este é um projeto de exemplo de uma aplicação de lista de tarefas (To-Do List) desenvolvida em Java com o framework Spring Boot e usando um banco de dados H2 (MySQL) para armazenar tarefas e usuários.
-            </p>
-            <a href="https://github.com/IgorPLobo15/todolist_java"target="_blank">Leia mais &rarr;</a>
-          </div>
-        </li>
-      </ul>
-    </section>
+        </article>
 
-    <!-- Footer -->
-    <footer id="footer">
-      <div class="footer__content max-width mb-0">
-        <h2 class="tertiary-title mb-s">Vamos conversar?</h2>
-        <p class="mb-m">
-          Ficarei feliz em saber mais sobre seus projetos e como podemos
-          trabalhar juntos para torná-los realidade.
-        </p>
-        <div class="footer__contact mb-m">
-          <span class="mb-m">igorplobo@email.com</span>
-          <span>62 98540-8854</span>
-        </div>
-        <ul class="mb-l">
-          <li>
-            <a href="https://www.instagram.com/igorp_lobo/" target="_blank"><img src="assets/instagrampequeno.png" alt="Instagram" /></a>
-          </li>
-          <li>
-            <a href="https://www.linkedin.com/in/igor-lobo-7273a123a/" target="_blank"><img src="assets/linkedinpequeno.png" alt="Linkedin" /></a>
-          </li>
-          <li>
-            <a href="https://github.com/IgorPLobo15"target="_blank"><img src="assets/githubpequeno.png" alt="Facebook" /></a>
-          </li>
-        </ul>
-        <p class="footer__copyright">
-          © 2023 Igor Pereira Lobo. Todos os direitos reservados.
-        </p>
+        <!-- SISPAC -->
+        <article class="group py-10 border-b border-white/5">
+          <div class="grid md:grid-cols-5 gap-6 md:gap-8">
+            <div class="md:col-span-2">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-accent"></span>
+                <p class="text-xs font-mono text-gray-600 uppercase tracking-wider">Em produção</p>
+              </div>
+              <p class="text-xs font-mono text-gray-600 mt-2">Angular · Laravel · PostgreSQL</p>
+            </div>
+            <div class="md:col-span-3 space-y-4">
+              <h3 class="text-xl font-medium text-gray-100 group-hover:text-white transition-colors duration-200">SISPAC
+                — Correição do Estado de Goiás</h3>
+              <p class="text-sm text-gray-400 leading-relaxed">
+                Sistema consolidado em operação na administração pública estadual, voltado às rotinas de correição.
+                Desenvolvido e mantido com Angular no front-end e Laravel no back-end.
+              </p>
+            </div>
+          </div>
+        </article>
+
       </div>
-    </footer>
-    <!-- script -->
-    <script src="scripts/index.js"></script>
-  </body>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ STACK ═══════════════════ -->
+  <section id="stack" class="py-24 md:py-32 border-t border-white/5">
+    <div class="max-w-5xl mx-auto px-6 reveal">
+
+      <p class="text-xs font-mono text-gray-600 uppercase tracking-widest mb-12">04 — Stack</p>
+
+      <h2 class="text-2xl md:text-3xl font-semibold text-gray-100 mb-16">Ferramentas & Tecnologias</h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-10">
+
+        <div>
+          <p class="text-xs font-mono text-gray-600 uppercase tracking-wider mb-4">Front-end</p>
+          <ul class="space-y-2.5 text-sm text-gray-400">
+            <li class="hover:text-gray-200 transition-colors duration-200">Angular</li>
+            <li class="hover:text-gray-200 transition-colors duration-200">TypeScript</li>
+            <li class="hover:text-gray-200 transition-colors duration-200">React Native</li>
+            <li class="hover:text-gray-200 transition-colors duration-200">Tailwind CSS</li>
+            <li class="hover:text-gray-200 transition-colors duration-200">HTML & CSS</li>
+            <li class="hover:text-gray-200 transition-colors duration-200">JavaScript</li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="text-xs font-mono text-gray-600 uppercase tracking-wider mb-4">Back-end</p>
+          <ul class="space-y-2.5 text-sm text-gray-400">
+            <li class="hover:text-gray-200 transition-colors duration-200">PHP</li>
+            <li class="hover:text-gray-200 transition-colors duration-200">Laravel</li>
+            <li class="hover:text-gray-200 transition-colors duration-200">PostgreSQL</li>
+            <li class="hover:text-gray-200 transition-colors duration-200">SQL</li>
+            <li class="hover:text-gray-200 transition-colors duration-200">REST APIs</li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="text-xs font-mono text-gray-600 uppercase tracking-wider mb-4">Ferramentas</p>
+          <ul class="space-y-2.5 text-sm text-gray-400">
+            <li class="hover:text-gray-200 transition-colors duration-200">Git</li>
+            <li class="hover:text-gray-200 transition-colors duration-200">Docker</li>
+            <li class="hover:text-gray-200 transition-colors duration-200">Jira</li>
+            <li class="hover:text-gray-200 transition-colors duration-200">Scrum</li>
+            <li class="hover:text-gray-200 transition-colors duration-200">VS Code</li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="text-xs font-mono text-gray-600 uppercase tracking-wider mb-4">Quality & Outros</p>
+          <ul class="space-y-2.5 text-sm text-gray-400">
+            <li class="hover:text-gray-200 transition-colors duration-200">Testes Unitários</li>
+            <li class="hover:text-gray-200 transition-colors duration-200">Testes E2E</li>
+            <li class="hover:text-gray-200 transition-colors duration-200">Testes Automatizados</li>
+            <li class="hover:text-gray-200 transition-colors duration-200">WordPress</li>
+            <li class="hover:text-gray-200 transition-colors duration-200">MVC Pattern</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ CONTATO ═══════════════════ -->
+  <section id="contato" class="py-24 md:py-32 border-t border-white/5">
+    <div class="max-w-5xl mx-auto px-6 reveal">
+
+      <p class="text-xs font-mono text-gray-600 uppercase tracking-widest mb-12">05 — Contato</p>
+
+      <div class="max-w-xl space-y-8">
+        <h2 class="text-3xl md:text-4xl font-semibold text-gray-100 leading-snug">
+          Vamos construir<br />algo juntos?
+        </h2>
+
+        <p class="text-gray-400 leading-relaxed">
+          Aberto a oportunidades, projetos freelance e colaborações técnicas. Fique à vontade para entrar em contato.
+        </p>
+
+        <div class="space-y-4 pt-4">
+          <a href="mailto:igorplobo@gmail.com"
+            class="flex items-center gap-3 text-gray-300 hover:text-white transition-colors duration-200 group">
+            <span class="text-xs font-mono text-gray-600 w-12">email</span>
+            <span class="text-sm link-underline">igorplobo@gmail.com</span>
+          </a>
+          <a href="https://www.linkedin.com/in/igor-pereira-lobo-7273a123a/" target="_blank" rel="noopener"
+            class="flex items-center gap-3 text-gray-300 hover:text-white transition-colors duration-200 group">
+            <span class="text-xs font-mono text-gray-600 w-12">in</span>
+            <span class="text-sm link-underline">LinkedIn</span>
+          </a>
+          <a href="https://github.com/IgorPLobo15" target="_blank" rel="noopener"
+            class="flex items-center gap-3 text-gray-300 hover:text-white transition-colors duration-200 group">
+            <span class="text-xs font-mono text-gray-600 w-12">gh</span>
+            <span class="text-sm link-underline">GitHub</span>
+          </a>
+          <a href="https://www.instagram.com/igorp_lobo/" target="_blank" rel="noopener"
+            class="flex items-center gap-3 text-gray-300 hover:text-white transition-colors duration-200 group">
+            <span class="text-xs font-mono text-gray-600 w-12">ig</span>
+            <span class="text-sm link-underline">Instagram</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ FOOTER ═══════════════════ -->
+  <footer class="border-t border-white/5 py-10">
+    <div class="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-xs text-gray-600 font-mono">© 2026 Igor Pereira Lobo</p>
+      <p class="text-xs text-gray-700 font-mono">Goiânia, GO — Brasil</p>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════ SCRIPTS ═══════════════════ -->
+  <script>
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+
+    // Close mobile menu on link click
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+      });
+    });
+
+    // Scroll reveal
+    const revealElements = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    revealElements.forEach(el => observer.observe(el));
+
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+      if (currentScroll > 80) {
+        navbar.classList.add('bg-surface-0/95');
+      } else {
+        navbar.classList.remove('bg-surface-0/95');
+      }
+      lastScroll = currentScroll;
+    });
+  </script>
+
+</body>
+
 </html>
